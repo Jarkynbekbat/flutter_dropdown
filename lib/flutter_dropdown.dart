@@ -6,7 +6,7 @@ enum DropDownType {
   Button,
 }
 
-class DropDown<T> extends StatefulWidget {
+class DropDownJar<T> extends StatefulWidget {
   final DropDownType dropDownType;
   final List<T> items;
 
@@ -24,7 +24,7 @@ class DropDown<T> extends StatefulWidget {
   /// You can choose between show an underline at bottom or not
   final bool showUnderline;
 
-  DropDown({
+  DropDownJar({
     this.dropDownType = DropDownType.Button,
     this.items,
     this.customWidgets,
@@ -35,15 +35,13 @@ class DropDown<T> extends StatefulWidget {
     this.isCleared = false,
     this.showUnderline = true,
   })  : assert(items != null && !(items is Widget)),
-        assert((customWidgets != null)
-            ? items.length == customWidgets.length
-            : (customWidgets == null));
+        assert((customWidgets != null) ? items.length == customWidgets.length : (customWidgets == null));
 
   @override
   _DropDownState createState() => _DropDownState();
 }
 
-class _DropDownState<T> extends State<DropDown<T>> {
+class _DropDownState<T> extends State<DropDownJar<T>> {
   T selectedValue;
 
   @override
@@ -72,24 +70,18 @@ class _DropDownState<T> extends State<DropDown<T>> {
             if (widget.onChanged != null) widget.onChanged(value);
           },
           value: widget.isCleared ? null : selectedValue,
-          items: widget.items
-              .map<DropdownMenuItem<T>>((item) => buildDropDownItem(item))
-              .toList(),
+          items: widget.items.map<DropdownMenuItem<T>>((item) => buildDropDownItem(item)).toList(),
           hint: widget.hint,
         );
     }
 
     // Wrapping Dropdown in DropdownButtonHideUnderline removes the underline
 
-    return widget.showUnderline
-        ? dropdown
-        : DropdownButtonHideUnderline(child: dropdown);
+    return widget.showUnderline ? dropdown : DropdownButtonHideUnderline(child: dropdown);
   }
 
   DropdownMenuItem<T> buildDropDownItem(T item) => DropdownMenuItem<T>(
-        child: (widget.customWidgets != null)
-            ? widget.customWidgets[widget.items.indexOf(item)]
-            : Text(item.toString()),
+        child: (widget.customWidgets != null) ? widget.customWidgets[widget.items.indexOf(item)] : Text(item.toString()),
         value: item,
       );
 }

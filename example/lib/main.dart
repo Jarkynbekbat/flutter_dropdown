@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: Theme.of(context).textTheme.display1,
               ),
               Text("Simple dropdown widget with string"),
-              DropDown<String>(
+              DropDownJar<String>(
                 items: <String>["Male", "Female", "Other"],
                 initialValue: "Female",
                 hint: Text("Select gender"),
@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 20),
               Text("A dropdown with object and With custom widgets"),
-              DropDown<Person>(
+              DropDownJar<Person>(
                 items: persons,
 //                initialValue: selectedPerson,
                 hint: Text("Select"),
@@ -107,15 +107,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Row buildDropDownRow(Person person) {
     return Row(
       children: <Widget>[
-        Expanded(child: Text(person?.gender ?? "Select")),
+        Text(person?.gender ?? "Select"),
         CircleAvatar(
           backgroundImage: NetworkImage(person.url),
         ),
       ],
     );
   }
-
-
 }
 
 class Person {
